@@ -22,7 +22,7 @@ Nothing was restored. Copy each file as found before you touch it; `git -C <repo
 As a Claude Code skill:
 
 ```sh
-git clone https://github.com/<org>/silent-change ~/.claude/skills/silent-change
+git clone https://github.com/PowerpBoxCaptain/silent-change ~/.claude/skills/silent-change
 ```
 
 Or just run it (Node 18+ and git):
