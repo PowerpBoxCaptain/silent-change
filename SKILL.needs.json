@@ -15,7 +15,9 @@
     "{skill}/**",
     "{tmp}/**"
   ],
-  "write_paths": [],
+  "write_paths": [
+    "{home}/silent-change-findings/**"
+  ],
   "forbid_paths": [],
   "network": "none",
   "outward_acts": [],
@@ -40,5 +42,5 @@
     ],
     "commit_paths_in_write_scope": false
   },
-  "note": "Paths: {project} is the folder the session works in, {skill} this skill's folder, {home} the home folder, {tmp} the temp folder. The check only reads. Its one write is the copy of a finding to a folder outside the repository, made with cp in the shell; it uses no Write or Edit tool."
+  "note": "Paths: {project} is the folder the session works in, {skill} this skill's folder, {home} the home folder, {tmp} the temp folder. The check only reads. Its one write is the copy of a finding to {home}/silent-change-findings/<date>/, made with mkdir and cp -p in the shell; it uses no Write or Edit tool."
 }

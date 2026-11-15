@@ -1,6 +1,6 @@
 ---
 name: "silent-change"
-description: "Check whether any git-tracked file's content changed on disk while `git status` still calls it clean (disk or filesystem corruption, tools that restore timestamps, tampering). Use when the user asks \"is my tree really what git thinks?\", after a crash, power loss, disk warning or restore from backup, before trusting a build or release from this machine, or when a file \"looks wrong\" but git shows no change. Read-only."
+description: "Check whether any git-tracked file's content changed on disk while `git status` still calls it clean (disk or filesystem corruption, tools that restore timestamps, tampering). Use when the user asks \"is my tree really what git thinks?\", after a crash, power loss, disk warning or restore from backup, before trusting a build or release from this machine, or when a file \"looks wrong\" but git shows no change. Read-only, except that it keeps a copy of a finding as found."
 tools: ["execute", "read", "search"]
 ---
 <!-- Generated from SKILL.md. Edit SKILL.md, not this file. -->
@@ -27,7 +27,10 @@ Exit codes: `0` no silent change · `1` at least one · `2` none found, but some
 
 ## What to do with a finding
 
-1. **Do not restore the file yet.** Copy it as found to a dated folder outside the repository.
+1. **Do not restore the file yet.** Copy it as found, keeping its timestamp, to a dated folder outside the repository:
+   `~/silent-change-findings/<YYYY-MM-DD>/<repo-name>/<path>`. Write the path out in full, not through a variable.
+   For example: `mkdir -p ~/silent-change-findings/2026-11-15/myrepo/src && cp -p src/a.txt ~/silent-change-findings/2026-11-15/myrepo/src/`.
+   This copy is the only thing the skill writes.
 2. Look at it: size, timestamp, what the bytes are (`xxd file | head`). Noise followed by zeros points at storage;
    readable but different text points at a tool or a person.
 3. Tell the user what you found. The good copy is `git -C <repo> show HEAD:<path>`; restoring is their call.
@@ -35,7 +38,7 @@ Exit codes: `0` no silent change · `1` at least one · `2` none found, but some
 
 ## What it does not do
 
-- It never restores, stages, refreshes git's index or takes git's lock. It only reads.
+- It never restores, stages, refreshes git's index or takes git's lock. Apart from the copy of a finding, it only reads.
 - It covers **tracked** files only. Untracked and ignored files are not checked.
 - A file git already lists as modified is not "silent" and is skipped.
 - Files stored through a filter (Git LFS and similar) are counted as "not compared", not passed.
