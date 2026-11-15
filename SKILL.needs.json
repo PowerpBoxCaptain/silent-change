@@ -1,0 +1,44 @@
+{
+  "schema": "skill-needs-v1",
+  "skill": "silent-change",
+  "written": "2026-11-15, by hand, from this SKILL.md",
+  "act": "local-write",
+  "tools": [
+    "Bash",
+    "Read",
+    "Grep",
+    "Glob"
+  ],
+  "read_paths": [
+    "{home}/**",
+    "{project}/**",
+    "{skill}/**",
+    "{tmp}/**"
+  ],
+  "write_paths": [],
+  "forbid_paths": [],
+  "network": "none",
+  "outward_acts": [],
+  "bash": {
+    "forbid": [
+      {
+        "re": "^\\s*git\\s+(-C\\s+\\S+\\s+)?(push|reset|rebase|stash|clean|restore|checkout\\s+--)\\b",
+        "why": "destructive or outward git"
+      },
+      {
+        "re": "^\\s*rm\\s+-[a-zA-Z]*r",
+        "why": "recursive delete"
+      },
+      {
+        "re": "^\\s*(sendmail|mailx?|mutt|msmtp|swaks)\\s|^\\s*curl\\b.*\\bsmtps?://",
+        "why": "outward mail"
+      },
+      {
+        "re": "^\\s*git\\s+(-C\\s+\\S+\\s+)?(add|update-index|update-ref|commit)\\b",
+        "why": "stages, commits or refreshes the index (the check only reads; restoring is the user's call)"
+      }
+    ],
+    "commit_paths_in_write_scope": false
+  },
+  "note": "Paths: {project} is the folder the session works in, {skill} this skill's folder, {home} the home folder, {tmp} the temp folder. The check only reads. Its one write is the copy of a finding to a folder outside the repository, made with cp in the shell; it uses no Write or Edit tool."
+}
