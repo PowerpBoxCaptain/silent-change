@@ -1,0 +1,10 @@
+{
+  "name": "silent-change",
+  "description": "Check whether any git-tracked file's content changed on disk while `git status` still calls it clean (disk or filesystem corruption, tools that restore timestamps, tampering). Use when the user asks \"is my tree really what git thinks?\", after a crash, power loss, disk warning or restore from backup, before trusting a build or release from this machine, or when a file \"looks wrong\" but git shows no change. Read-only.",
+  "author": {
+    "name": "Capt. Anil Sharma"
+  },
+  "homepage": "https://github.com/PowerpBoxCaptain/silent-change",
+  "repository": "https://github.com/PowerpBoxCaptain/silent-change",
+  "license": "AGPL-3.0-only"
+}
